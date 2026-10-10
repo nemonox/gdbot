@@ -4,15 +4,16 @@ GDBot plays Grim Dawn for you while you watch: it clears the area around your ch
 potions, picks up loot and (optionally) goes to town to stash and sell. You control it from a small menu
 **inside the game** — press **F8** to open it.
 
-> Version 0.1 — early release. Expect rough edges and please report what goes wrong (see [Contact](#contact)).
+> Version 0.2 — early release. Expect rough edges and please report what goes wrong (see [Contact](#contact)).
 
-## What it does (v0.1)
+## What it does (v0.2)
 
 | Menu item | What happens |
 |---|---|
 | **Clear the area** | Kills every enemy around you, explores what it hasn't seen, loots, then walks on to the next area. |
+| **Farm Act 1** | Walks Act 1 on foot (no riftgates) from where your character is to Warden Krieg, killing the bosses and heroes on the way. Start it in Devil's Crossing or at any Act 1 riftgate. Bosses far above your level are skipped. |
 | **Assistant** | You walk; the bot shoots whatever is in range and drinks potions for you. |
-| **Settings** | Sell when the bag is full · Fight bosses · Save screenshots to report problems · Language (English / Português). |
+| **Settings** | Sell when the bag is full · Fight bosses · Act: optional dungeons and bosses · Save screenshots to report problems · Language (English / Português) · Send anonymous usage stats. |
 
 ## Requirements
 
@@ -29,11 +30,11 @@ potions, picks up loot and (optionally) goes to town to stash and sell. You cont
 
 ## Install
 
-1. Download `gdbot_0.1.0_amd64.deb` from the [Releases](https://github.com/nemonox/gdbot/releases) page.
+1. Download `gdbot_0.2.0_amd64.deb` from the [Releases](https://github.com/nemonox/gdbot/releases) page.
 2. Open a terminal in the folder where you saved it and run:
 
    ```bash
-   sudo apt install ./gdbot_0.1.0_amd64.deb
+   sudo apt install ./gdbot_0.2.0_amd64.deb
    ```
 
 3. Run the setup once (it finds the game, checks your game settings and your system):
@@ -89,9 +90,24 @@ you can attach them to a bug report). The permission is remembered, so it asks o
   `/usr/lib/udev/rules.d/70-gdbot.rules` gives access only to the user logged in at the computer.
 - **Your keyboard keys F8–F11** are read so you can control the bot from inside the game.
 - **Game files, read-only** (database, maps, key bindings) — names of items and areas, where the walls are.
-- **No internet** by default. The only exception is opt-in: during `gdbot setup` you may enter an API key
-  for TypeSafe (an AI service) to rate items instead of the built-in rules — then the *descriptions of your
-  items* are sent to it. Just press Enter to skip it; the built-in rules work offline.
+- **Internet: only anonymous usage stats** (see below), which you can turn off. The other exception is opt-in:
+  during `gdbot setup` you may enter an API key for TypeSafe (an AI service) to rate items instead of the
+  built-in rules — then the *descriptions of your items* are sent to it. Just press Enter to skip it; the
+  built-in rules work offline.
+
+## Anonymous usage stats
+
+So I know how many people use GDBot and where in the world, the bot sends a tiny message to
+[PostHog](https://posthog.com) when the bot menu opens and when a mode starts. It contains:
+
+- a random id made on your computer the first time (`~/.config/gdbot/id_anonimo`) — not your name, Steam
+  account, character or computer;
+- the event ("gdbot aberto" / "modo iniciado"), the mode you picked, the GDBot version, the menu language,
+  your distro and desktop.
+
+PostHog works out the country/city from the connection; nothing else about you is collected, and no screen
+images or game data ever leave your computer. **To turn it off:** bot menu → Settings → *Send anonymous usage
+stats: no* (or set `GDBOT_SEM_ESTATISTICAS=1`). Without internet, nothing happens.
 
 ## Play responsibly
 
